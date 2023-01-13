@@ -31,7 +31,7 @@ var server = app.listen(process.env.API_PORT, (error) => {
     if (error) {
         console.error("Error Occurred while connecting to server: ", error);
     } else {
-        console.log("Connected to Server Successfully!");
+        console.log("App is listining on port " + process.env.API_PORT);
 
         console.log("Trying to connect to database server...");
 
