@@ -1,5 +1,6 @@
 const Report = require("../models/report");
 const File = require("../models/file");
+const { io, Socket } = require("../index")
 
 class ReportController {
 
@@ -36,9 +37,13 @@ class ReportController {
                                     message: `Error: ${err}`,
                                 });
                             } else {
+
                                 res.status(200).json({
                                     message: `Report Generated.`,
                                 });
+
+                                Socket.broadcast.emit("hello", "world");
+
                             }
                         }
                     );

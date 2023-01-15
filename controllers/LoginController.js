@@ -35,6 +35,7 @@ class LoginController {
                                 email: existingUser.email,
                                 _id: user[0]._id,
                                 token: token,
+                                role: user[0].role,
                                 isVerified: user[0].isVerified,
                             });
                         } else {

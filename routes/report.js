@@ -11,7 +11,6 @@ module.exports = (upload) => {
         auth,
         upload.single("image"),
         async (req, res, next) => {
-
             PostReport.Execute(req, res, next);
 
         });

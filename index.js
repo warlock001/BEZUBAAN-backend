@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-var cors = require("cors");
+const cors = require('cors');
 const path = require("path");
 
 dotenv.config();
@@ -15,6 +15,7 @@ const loginRouter = require("./routes/login");
 const reportRouter = require("./routes/report");
 const upload = require("./middleware/upload");
 
+app.use(cors());
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,13 +24,6 @@ app.use(signupRouter);
 app.use(loginRouter);
 app.use(reportRouter(upload));
 
-
-const corsOptions = {
-    origin: "*",
-};
-app.use(cors(corsOptions));
-
-// app.use(cors(corsOptions, { credentials: true, origin: true }));
 var server = app.listen(process.env.API_PORT, (error) => {
     if (error) {
         console.error("Error Occurred while connecting to server: ", error);
@@ -47,3 +41,22 @@ var server = app.listen(process.env.API_PORT, (error) => {
         });
     }
 });
+
+var io = require("socket.io")(server)
+const Socket =
+    io.on("connection", function (socket) {
+        return socket;
+        console.log("Admin connected succesfully to the socket ...");
+        Socket = socket;
+        if (socket.handshake.headers.role === "client") {
+            console.log("Connected succesfully to the socket ...");
+        } else {
+            console.log("Admin connected succesfully to the socket ...");
+        }
+
+
+    });
+
+module.exports = { io, Socket };
+
+
