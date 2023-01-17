@@ -43,11 +43,10 @@ var server = app.listen(process.env.API_PORT, (error) => {
 });
 
 var io = require("socket.io")(server)
-const Socket =
+Socket =
     io.on("connection", function (socket) {
-        return socket;
+
         console.log("Admin connected succesfully to the socket ...");
-        Socket = socket;
         if (socket.handshake.headers.role === "client") {
             console.log("Connected succesfully to the socket ...");
         } else {
@@ -55,8 +54,14 @@ const Socket =
         }
 
 
+
+        return socket;
+
     });
 
-module.exports = { io, Socket };
+app.set("io", io)
+
+
+
 
 

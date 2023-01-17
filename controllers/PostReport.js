@@ -1,12 +1,14 @@
 const Report = require("../models/report");
 const File = require("../models/file");
-const { io, Socket } = require("../index")
+const axios = require("axios");
+
 
 class ReportController {
 
+
     static async Execute(req, res) {
         const { user, location } = req.body;
-
+        let io = req.app.get("io")
 
         if (user != undefined &&
             location != undefined &&
@@ -31,7 +33,7 @@ class ReportController {
                             location: location,
                             file: result._id,
                         },
-                        (err, response) => {
+                        async (err, response) => {
                             if (err) {
                                 res.status(400).json({
                                     message: `Error: ${err}`,
@@ -42,7 +44,8 @@ class ReportController {
                                     message: `Report Generated.`,
                                 });
 
-                                Socket.broadcast.emit("hello", "world");
+                                const location = await axios.get('https://us1.locationiq.com/v1/reverse?key=pk.8a577d1b155ce4938bc3dbe2b851c181&lat=24.817432&lon=67.120253&format=json');
+                                io.emit("report", location.data.display_name);
 
                             }
                         }
