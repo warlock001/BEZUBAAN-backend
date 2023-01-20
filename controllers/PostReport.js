@@ -31,6 +31,7 @@ class ReportController {
                         {
                             user: user,
                             location: location,
+                            status: "pending",
                             file: result._id,
                         },
                         async (err, response) => {
@@ -43,9 +44,9 @@ class ReportController {
                                 res.status(200).json({
                                     message: `Report Generated.`,
                                 });
-
-                                const location = await axios.get('https://us1.locationiq.com/v1/reverse?key=pk.8a577d1b155ce4938bc3dbe2b851c181&lat=24.817432&lon=67.120253&format=json');
-                                io.emit("report", location.data.display_name);
+                                var loc = JSON.parse(location)
+                                const Location = await axios.get(`https://us1.locationiq.com/v1/reverse?key=pk.8a577d1b155ce4938bc3dbe2b851c181&lat=${loc.latitude}&lon=${loc.longitude}&format=json`);
+                                io.emit("report", { location: Location.data.display_name, reportId: response._id });
 
                             }
                         }

@@ -5,7 +5,16 @@ const ReportSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    rescuer: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        require: false,
+    },
     location: {
+        type: String,
+        required: false,
+    },
+    status: {
         type: String,
         required: false,
     },
@@ -13,7 +22,7 @@ const ReportSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "File",
         required: false,
-    },
+    }
 },
     { timestamps: true });
 

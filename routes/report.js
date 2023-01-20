@@ -1,4 +1,5 @@
 const PostReport = require("../controllers/PostReport");
+const PutReport = require("../controllers/PutReport");
 
 
 
@@ -6,6 +7,7 @@ const Router = require("express").Router();
 const auth = require("../middleware/commonauth");
 
 module.exports = (upload) => {
+
     Router.post(
         "/report",
         auth,
@@ -15,7 +17,12 @@ module.exports = (upload) => {
 
         });
 
+    Router.put(
+        "/updatereport",
+        async (req, res, next) => {
+            PutReport.Execute(req, res, next);
 
+        });
 
     return Router;
 

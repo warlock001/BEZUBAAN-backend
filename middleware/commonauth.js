@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
 	try {
 		const decoded = jwt.verify(token, config.ACCESS_TOKEN_JWT);
 		console.log(decoded);
-		if (decoded.role == "client" || decoded.role == "admin") {
+		if (decoded.role == "client" || decoded.role == "admin" || decoded.role == "rescuer") {
 			req.user = decoded;
 		} else {
 			throw new Error();
