@@ -18,6 +18,10 @@ const ReportSchema = mongoose.Schema({
         type: String,
         required: false,
     },
+    ETA: {
+        type: String,
+        required: false,
+    },
     file: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "File",

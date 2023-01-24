@@ -6,7 +6,7 @@ class ReportController {
 
 
     static async Execute(req, res) {
-        const { rescuer } = req.body;
+        const { rescuer, ETA } = req.body;
         const { id } = req.query;
         console.log(req.body)
         console.log(req.query)
@@ -14,26 +14,63 @@ class ReportController {
             id != undefined &&
             id.match(/^[0-9a-fA-F]{24}$/)) {
 
-            Report.findOneAndUpdate(
-                { '_id': id },
-                {
-                    $set:
+            const report = await Report.findOne({ _id: id });
+
+
+            if (ETA != undefined) {
+                console.log("in here")
+                Report.findOneAndUpdate(
+                    { '_id': id },
                     {
-                        rescuer: rescuer,
-                    }
-                },
-                { upsert: true },
-                (err, response) => {
-                    if (err) {
-                        res.status(400).json({
-                            message: `Error: ${err}`,
-                        });
-                    } else {
-                        res.status(200).json({
-                            message: `Report Updated.`,
-                        });
-                    }
+                        $set:
+                        {
+                            rescuer: rescuer,
+                            ETA: ETA
+                        }
+                    },
+                    { upsert: true },
+                    (err, response) => {
+                        if (err) {
+                            res.status(400).json({
+                                message: `Error: ${err}`,
+                            });
+                        } else {
+                            res.status(200).json({
+                                message: `Report Updated.`,
+                            });
+                        }
+                    });
+
+
+            } else if (report.status == 'On Going') {
+                res.status(409).json({
+                    message: `On Going`,
                 });
+            } else {
+                Report.findOneAndUpdate(
+                    { '_id': id },
+                    {
+                        $set:
+                        {
+                            rescuer: rescuer,
+                            status: 'On Going'
+                        }
+                    },
+                    { upsert: true },
+                    (err, response) => {
+                        if (err) {
+                            res.status(400).json({
+                                message: `Error: ${err}`,
+                            });
+                        } else {
+                            res.status(200).json({
+                                message: `Report Updated.`,
+                            });
+                        }
+                    });
+            }
+
+
 
 
 
