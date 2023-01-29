@@ -1,5 +1,7 @@
 const PostReport = require("../controllers/PostReport");
 const PutReport = require("../controllers/PutReport");
+const GetReport = require("../controllers/GetReport");
+
 
 
 
@@ -15,6 +17,13 @@ module.exports = (upload) => {
         async (req, res, next) => {
             PostReport.Execute(req, res, next);
 
+        });
+
+
+    Router.get(
+        "/report",
+        async (req, res, next) => {
+            GetReport.Execute(req, res, next);
         });
 
     Router.put(
