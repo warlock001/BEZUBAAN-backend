@@ -12,13 +12,15 @@ class GetReportController {
 
             var report = await Report.find({
                 rescuer: id
-            });
+            }).populate({
+                path: 'user'
+            });;
 
             if (report && report.length > 0) {
 
                 res.status(200).json({
                     message: "Sucess",
-                    data: report
+                    report: report
                 });
 
             } else {
@@ -36,7 +38,7 @@ class GetReportController {
 
                 res.status(200).json({
                     message: "Sucess",
-                    data: report
+                    report: report
                 });
 
             } else {
