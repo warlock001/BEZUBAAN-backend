@@ -6,7 +6,7 @@ class ReportController {
 
 
     static async Execute(req, res) {
-        const { rescuer, ETA } = req.body;
+        const { rescuer, ETA, status } = req.body;
         const { id } = req.query;
         console.log(req.body)
         console.log(req.query)
@@ -42,9 +42,30 @@ class ReportController {
                     });
 
 
+            } else if (status != undefined) {
+                Report.findOneAndUpdate(
+                    { '_id': id },
+                    {
+                        $set:
+                        {
+                            status: status
+                        }
+                    },
+                    { upsert: true },
+                    (err, response) => {
+                        if (err) {
+                            res.status(400).json({
+                                message: `Error: ${err}`,
+                            });
+                        } else {
+                            res.status(200).json({
+                                message: `Report Updated.`,
+                            });
+                        }
+                    });
             } else if (report.status == 'On Going') {
                 res.status(409).json({
-                    message: `On Going`,
+                    message: `Already Taken, Thanks for Considering`,
                 });
             } else {
                 Report.findOneAndUpdate(

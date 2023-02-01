@@ -45,8 +45,8 @@ class ReportController {
                                     message: `Report Generated.`,
                                 });
                                 var loc = JSON.parse(location)
-                                const Location = await axios.get(`https://us1.locationiq.com/v1/reverse?key=pk.8a577d1b155ce4938bc3dbe2b851c181&lat=${loc.latitude}&lon=${loc.longitude}&format=json`);
-                                io.emit("report", { location: Location.data.display_name, reportId: response._id });
+                                const Location = await axios.get(`https://us1.locationiq.com/v1/reverse?key=pk.8a577d1b155ce4938bc3dbe2b851c181&lat=${loc.latitude}&lon=${loc.longitude}&format=json`).catch((e) => { console.log('network error') });
+                                io.emit("report", { location: Location?.data.display_name ? Location.data.display_name : "no location", reportId: response._id });
 
                             }
                         }

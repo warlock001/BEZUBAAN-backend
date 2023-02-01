@@ -43,7 +43,7 @@ class SignupController {
                                 user: response._id,
                                 email: response.email.trim(),
                                 password: hash,
-                                role: "client",
+                                role: "user",
                                 OTP: password,
                             });
 
