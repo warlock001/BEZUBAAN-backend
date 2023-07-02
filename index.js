@@ -13,13 +13,14 @@ const signupRouter = require("./routes/signup");
 const loginRouter = require("./routes/login");
 const reportRouter = require("./routes/report");
 const adoptionRouter = require("./routes/adoption");
+const file = require("./routes/file");
 const upload = require("./middleware/upload");
 
 app.use(cors());
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(file);
 app.use(signupRouter);
 app.use(loginRouter);
 app.use(reportRouter(upload));
