@@ -22,6 +22,10 @@ const ReportSchema = mongoose.Schema({
         type: String,
         required: false,
     },
+    address: {
+        type: String,
+        required: false,
+    },
     file: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "File",

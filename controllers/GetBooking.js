@@ -7,6 +7,8 @@ class GetBookingController {
     if (id != undefined && id.match(/^[0-9a-fA-F]{24}$/)) {
       var booking = await Booking.find({
         vet: id,
+      }).populate({
+        path: 'user'
       });
 
       if (booking && booking.length > 0) {
