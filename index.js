@@ -14,6 +14,7 @@ const loginRouter = require("./routes/login");
 const reportRouter = require("./routes/report");
 const adoptionRouter = require("./routes/adoption");
 const vetRouter = require("./routes/vet");
+const booking = require("./routes/booking");
 const file = require("./routes/file");
 const upload = require("./middleware/upload");
 
@@ -27,6 +28,7 @@ app.use(loginRouter);
 app.use(reportRouter(upload));
 app.use(adoptionRouter(upload));
 app.use(vetRouter(upload));
+app.use(booking);
 var server = app.listen(process.env.API_PORT, (error) => {
   if (error) {
     console.error("Error Occurred while connecting to server: ", error);
